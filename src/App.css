@@ -1,0 +1,79 @@
+@import url('http://fonts.cdnfonts.com/css/games');
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+.welcome{
+    background-image: url("solarSystem.jpg");
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    color: lavender;
+}
+.intro{
+    font-family: "Cairo";
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 25px;
+    padding-left: 10px;
+    text-indent: 1px;
+    padding-top: 20px;
+    background-color: transparent;
+}
+p{
+    margin: 0 0;
+}
+.gameTitle{
+    display: flex;
+    font-family: Games;
+    position: fixed;
+    top: 540px;
+    left: 550px;
+    justify-content: space-between;
+}
+.start{
+    position: fixed;
+    top: 640px;
+    left: 740px;
+}
+button{
+    font-family: Cairo;
+    font-weight: bold;
+    font-size: medium;
+    background-color: silver;
+    height: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: darkgray;
+}
+button:active{
+    border-style: solid;
+    border-color: lightgrey;
+}
+.astronautS{
+    height: 120px;
+    margin-top: -30px;
+}
+.astronautS:hover{
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+}
+.gameTitle:hover{
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}

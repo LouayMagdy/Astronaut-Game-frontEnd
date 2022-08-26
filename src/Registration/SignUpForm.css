@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+.SignUpForm, .signInForm{
+    display: block;
+    padding: 5px 5px;
+    font-family: Cairo;
+    width: max-content;
+    height: max-content;
+}
+.item{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 10px;
+}
+.itemGG{
+    margin-top: 0;
+    padding-top: 0;
+    display: flex;
+    justify-content: center;
+}
+.btnR, .btnJ{
+    height: 40px;
+    font-weight: bold;
+    font-size: medium;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px gray;
+    cursor: pointer;
+    margin: 5px 5px;
+    display: block;
+}
+.btnR{
+    background-color: lightblue;
+}
+.btnR:hover{
+    background-color: cornflowerblue;
+}
+.btnJ{
+    background-color: darkgray;
+}
+.btnJ:hover{
+    background-color: gray;
+}
+.btnJ:active{
+    border-color: lightgrey;
+    border-style: solid;
+}
+.btnR:active{
+    border-color: lightgrey;
+    border-style: solid;
+}
+.radio:checked{
+    color: black;
+}
+.radio{
+    color: white;
+}

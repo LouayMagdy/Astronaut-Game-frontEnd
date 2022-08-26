@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+.gamePage{
+    background-image: url("../solarSystem.jpg");
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+.header{
+    display: flex;
+    justify-content: right;
+    color: white;
+}
+.GameMenu{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 800px;
+    padding: 20px 20px;
+    position: fixed;
+}
+.menu{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+.astronautF{
+    display: block;
+    left: auto;
+    right: auto;
+    height: 300px;
+}
+.titleImage{
+    display: flex;
+}
+.title{
+    margin-top: 150px;
+    font-family: Games;
+}

@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+.page{
+    background-image: url("../solarSystem.jpg");
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: right;
+    color: lavender;
+}
+.Register{
+    background: rgba(0, 0, 0 , 0.3);
+    border-radius: 10px;
+    position: fixed;
+    top: 50px;
+}
+.buttons{
+    border-radius: 10px;
+    display: flex;
+}
+.sign-up, .sign-in{
+    background-color: black;
+    color: lightgray;
+    height: 50px;
+    font-family: Cairo;
+    font-weight: bold;
+    font-size: large;
+    border-style: none;
+    width: 170px;
+}
+.sign-up{
+    border-top-left-radius: inherit;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.sign-in{
+    border-top-right-radius: inherit;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.sign-up:hover, .sign-in:hover{
+    background-color: rgba(100, 100, 100, 0.3);
+}
+.astronaut{
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,25 @@
+.load{
+    position: fixed;
+    top: 200px;
+    animation: rotation 2s infinite linear;
+    height: 300px;
+}
+.loading{
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    color: white;
+}
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
