@@ -11,10 +11,10 @@
     /*background-image: url("https://st2.depositphotos.com/7226312/11290/v/600/depositphotos_112901412-stock-illustration-earth-horizon-from-space-with.jpg");*/
     /*background-repeat: no-repeat;*/
     /*background-size: cover;*/
-    background-image: linear-gradient(to bottom right,black, black, navy, darkviolet, saddlebrown) ;
+    background-image: linear-gradient(to bottom right,black, black, navy, darkviolet, saddlebrown, black) ;
     position: fixed;
     border-radius: 5px;
-    box-shadow: 2px 2px 2px 2px grey;
+    box-shadow: 2px 2px 2px black;
 }
 .stage{
     height: inherit;

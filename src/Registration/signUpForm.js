@@ -8,9 +8,23 @@ let SignUpForm = () => {
         if(e.target.name !== 'male' && e.target.name !== 'female') setUser({...user, [e.target.name]: e.target.value})
         else setUser({...user, gender: e.target.name})
     }
-    let submit = (e) => {
+    let submit = async (e) => {
         e.preventDefault()
-        /////check all data
+        if (user.name && user.userName && user.password && user.gender){
+            let response = await fetch("http://localhost:8080/AstronautGame/Registration/SignUp", {
+                method : "POST",
+                headers : {
+                    'Content-Type': 'application/json'
+                },
+                body : JSON.stringify(
+                    {"fullName" : user.name, "userName" : user.userName, "password" : user.password, "gender" : (user.gender === "male")}
+                )
+            }).then(res => res.json()).then(data => {
+                console.log(JSON.stringify(user))
+                if(data === -1) alert("Already Registered!!, Go and Sign-in...")
+                else navigate(`/AstronautGame/Game:${data}`)
+            })
+        }
         console.log(user)
         setUser({name: '', userName: '', password: '', gender: ''});
         ///navigate using the user id

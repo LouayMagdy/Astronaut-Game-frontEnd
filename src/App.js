@@ -39,7 +39,10 @@ function App() {
               <img src={astro} alt={'astronaut'} className={'astronautS'}/>
           </div>
           <div className={'start'}>
-              <button onClick={() => navigate(`/Register${id}`)}> Get Started <i className={'fas fa-user-astronaut'}></i> </button>
+              <button onClick={() => (id.replaceAll(":", '') === '0')? navigate(`/AstronautGame/Register${id.replaceAll(":", '')}`) : navigate(`/AstronautGame/Game${id.replaceAll(":", '')}`)}>
+                  Get Started
+                  <i className={'fas fa-user-astronaut'}></i>
+              </button>
           </div>
       </div>
 

@@ -1,0 +1,62 @@
+.mainRef{
+    font-family: Games;
+    background-image: url("../../solarSystem.jpg");
+    filter: ;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+.titleR{
+    padding-top: 30px;
+    font-size: xx-large;
+}
+.rules{
+    background-color: rgba(10,10,10, 0.2);
+    position: fixed;
+    width: fit-content;
+}
+.rules ul{
+    display: block;
+    font-size: large;
+}
+.movements{
+    display: block;
+    position: fixed;
+    font-size: large;
+}
+.movements p{
+    text-align: center;
+}
+.moves{
+    display: flex;
+    justify-content: space-around;
+}
+.moves li{
+    list-style-type: none;
+    display: block;
+}
+.moves li img{
+    height: 230px;
+    width: 180px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.moveRR{
+    display: block;
+}
+.moveRR li{
+    list-style-type: square;
+    padding: 4px 4px;
+    border-top: white solid 1px;
+    border-bottom: white solid 1px;
+}
+.btn{
+    display: flex;
+    justify-content: center;
+}

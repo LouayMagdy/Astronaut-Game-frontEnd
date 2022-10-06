@@ -18,11 +18,18 @@
     justify-content: center;
     position: fixed;
     left: 750px;
+    top: 50px;
 }
 .ranks{
     position: fixed;
-    top: 200px;
+    top: 130px;
     width: 800px;
+}
+.ranks label{
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
 .first{
     color: gold;

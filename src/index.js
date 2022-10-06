@@ -8,18 +8,20 @@ import Ranking from "./Ranking/Ranking";
 import About from "./About/About";
 import Game from "./Game/Game";
 import GameKonva from "./Game/GameKonva";
+import Rules from "./Game/Rules/Rules";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       <BrowserRouter>
           <Routes>
-              <Route path={'/:id'} element={<App/>}></Route>
-              <Route path={'/Register:id'} element={<Register/>} ></Route>
-              <Route path={'/Ranking:id'} element={<Ranking/>}></Route>
-              <Route path={'/About:id'} element={<About/>}></Route>
-              <Route path={'/Game:id'} element={<Game/>}></Route>
-              <Route path={'/match:id'} element={<GameKonva/>}></Route>
+              <Route path={'/AstronautGame/:id'} element={<App/>}></Route>
+              <Route path={'/AstronautGame/Register:id'} element={<Register/>} ></Route>
+              <Route path={'/AstronautGame/Ranking:id'} element={<Ranking/>}></Route>
+              <Route path={'/AstronautGame/About:id'} element={<About/>}></Route>
+              <Route path={'/AstronautGame/Game:id'} element={<Game/>}></Route>
+              <Route path={'/AstronautGame/Rules:id'} element={<Rules/>}></Route>
+              <Route path={'/AstronautGame/match:id'} element={<GameKonva/>}></Route>
           </Routes>
       </BrowserRouter>
   </React.StrictMode>

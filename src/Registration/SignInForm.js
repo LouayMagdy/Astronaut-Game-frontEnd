@@ -9,9 +9,22 @@ let SignInForm = () =>{
     let updateUser = (e) => {
         setUser({...user, [e.target.name]: e.target.value})
     }
-    let submit = (e) => {
+    let submit = async (e) => {
         e.preventDefault()
-        ////check all data
+        if(user.userName && user.password){
+            let response = await fetch("http://localhost:8080/AstronautGame/Registration/SignIn",
+                {
+                    method : 'POST',
+                    headers : {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                }).then((res) => res.json()).then((data) => {
+                    if(data >= 0) navigate(`/AstronautGame/Game:${data}`)
+                    else if (data < 0) alert('No Such User Registered!!')
+            })
+        }
+        else alert("Some fields needs to be filled!!")
         console.log(user)
         setUser({name: '', userName: '', password: '', gender: ''});
         ////navigate using user id
