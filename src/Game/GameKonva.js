@@ -1,39 +1,80 @@
 import React, {useCallback, useEffect, useState} from "react";
 import './GameKonva.css'
-import {Image, Layer, Star, Stage, Text, Rect} from 'react-konva';
+import {Image, Layer, Star, Stage, Text, Rect, Circle} from 'react-konva';
 import 'gifler'
 import useImage from "use-image";
 import lava from './lava rock.png'
 import foods from './food.png'
 import gif from './Untitled-unscreen.gif'
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
+
+const wsAPI = new WebSocket("ws://localhost:8080/AstronautGame/Match")
 
 let GameKonva = () => {
-    let [Astronaut, setAstronaut] = useState({x: 310, y: 160, rotation: 0})
+    let {id} = useParams()
+    let [Astronaut, setAstronaut] = useState({x: 200, y: 100, rotation: 0})
     let [rocks, setRocks] = useState([]);
     let [food, setFood] = useState([]);
     let [stars, setStar] = useState([])
+    let [circles, setCircles] = useState(
+        [{x: Astronaut.x + 90, y: Astronaut.y + 60, radius: 24},
+                  {x: Astronaut.x + 88, y: Astronaut.y + 90, radius: 20},
+                  {x: Astronaut.x + 86, y: Astronaut.y + 110, radius: 18}]
+    )
     let [time, setTime] = useState(120)
-    let [life, setLife] = useState(0.6)
+    let [life, setLife] = useState(1)
+
+
     useEffect(() => {
         let match = document.querySelector('.match')
         match.focus()
     }, [])
+
+    useEffect(() => {
+        if (time === 0) return
+        let match = document.querySelector('.match');
+        let right =  Number.parseInt(match.style.width)
+        let bottom = Number.parseInt(match.style.height)
+        if (wsAPI.readyState === wsAPI.OPEN) {
+            wsAPI.send(JSON.stringify({
+                iD: id,
+                x: right,
+                y: bottom,
+                circles: circles
+            }))
+            console.log("some data sent to the backend")
+        }
+        else console.log("ws closed")
+        setTimeout(() => {}, 1000)
+    }, [time])
+
     useEffect(() => {
         if(time === 0) return;
         setTimeout(() => {
             setTime(time - 1);
         }, 1000)
     }, [time])
-    useEffect(() => {
-        ////send request to get food position
-        setFood([{x: 20, y: 50}, {x: 120, y: 150}, {x: 220, y: 250}])
-    }, [])
-    useEffect(() => {
-        ////send request to get rocks position
-        setRocks([{x: 30, y: 60}, {x: 140, y: 160}, {x: 240, y: 280}])
-    }, [])
-    useEffect(() => {
+
+
+    useEffect(() => { //// on message
+        if (time === 0) return;
+        let missles = [], tFood = [], tRocks = []
+        wsAPI.onmessage = (data) => {
+            console.log("some data received")
+            let parsedData = JSON.parse(data.data)
+            setLife(parsedData.life / 100)
+            parsedData.movables.forEach( movable => missles.push(JSON.parse(movable)))
+            missles.forEach(missle => {
+                if(missle.type === 'rock') tRocks.push({x: missle.point.x, y: missle.point.y})
+                if(missle.type === 'food') tFood.push({x: missle.point.x, y: missle.point.y})
+            })
+        }
+        setFood(tFood)
+        setRocks(tRocks)
+        console.log(food, rocks)
+    }, [time])
+
+    useEffect(() => { /// for stars
         if(time === 0) return;
         let size = Math.trunc(Math.random() * 50)
         let array = [];
@@ -43,10 +84,6 @@ let GameKonva = () => {
         for(let i = 0; i < size; i++)
             array.push({x: Math.trunc(Math.random() * (right - left)) + left, y: Math.trunc(Math.random() * (bottom - top)) + top})
         setStar(array)
-    }, [time])
-    useEffect(() => {
-        if(time === 0) return;
-        //////get the remaining life
     }, [time])
 
     let moveAstronaut = useCallback(e => {
@@ -72,8 +109,19 @@ let GameKonva = () => {
             else if(Astronaut.rotation === 45) setAstronaut({...Astronaut, y: Math.min(Astronaut.y + 10, bottom - 150), x: Math.max(Astronaut.x - 10, left + 30)})
             else if(Astronaut.rotation === -45) setAstronaut({...Astronaut, y: Math.min(Astronaut.y + 10, bottom - 50), x: Math.min(Astronaut.x + 10, right - 160)})
         }
+        if (Astronaut.rotation === 0)
+            setCircles([{x: Astronaut.x + 90, y: Astronaut.y + 60, radius: 24},
+                {x: Astronaut.x + 88, y: Astronaut.y + 90, radius: 20},
+                {x: Astronaut.x + 86, y: Astronaut.y + 110, radius: 18}])
+        else if (Astronaut.rotation === 45)
+            setCircles([{x: Astronaut.x + 26, y: Astronaut.y + 100, radius: 23},
+                {x: Astronaut.x + 5, y: Astronaut.y + 120, radius: 18},
+                {x: Astronaut.x - 10, y: Astronaut.y + 135, radius: 16}])
+        else
+            setCircles([{x: Astronaut.x + 105, y: Astronaut.y - 18, radius: 23},
+                {x: Astronaut.x + 120, y: Astronaut.y, radius: 18},
+                {x: Astronaut.x + 139, y: Astronaut.y + 18, radius: 16}])
     }, [Astronaut])
-    let {id} = useParams()
     let [rock] = useImage(lava)
     let [foodI] = useImage(foods)
     let length = 500;
@@ -91,6 +139,9 @@ let GameKonva = () => {
                     {rocks.map(rocka => <Image image={rock} x={rocka.x} y={rocka.y} height={50} width={50} key={`${rocka.x} ${rocka.y}`}/>)}
                     {food.map(sandwich => <Image image={foodI} x={sandwich.x} y={sandwich.y} height={38} width={48} key={`${sandwich.x} ${sandwich.y}`}/>)}
                     <GIF src={gif} x={Astronaut.x} y={Astronaut.y} rotation={Astronaut.rotation} />
+                    <Circle x={200 + 90} y={100 + 60} radius={24} stroke={'red'}></Circle>
+                    <Circle x={200 + 88} y={100 + 90} radius={20} stroke={'red'}></Circle>
+                    <Circle x={200 + 86} y={100 + 110} radius={18} stroke={'red'}></Circle>
                 </Layer>
             </Stage>
          </div>

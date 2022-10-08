@@ -7,7 +7,7 @@ let Rules = () =>{
     let {id} = useParams()
     useEffect(() => {
         setTimeout(() => {
-            navigate(`/match${id}`)
+            navigate(`/AstronautGame/match${id}`)
         }, 120000)
     }, [])
     return <div className={'mainRef'}>
@@ -46,7 +46,7 @@ let Rules = () =>{
                 </li>
             </ul>
             <div className={'btn'}>
-                <button onClick={() => navigate(`/match${id}`)}> Proceed To The Game</button>
+                <button onClick={() => navigate(`/AstronautGame/match${id}`)}> Proceed To The Game</button>
             </div>
         </div>
 

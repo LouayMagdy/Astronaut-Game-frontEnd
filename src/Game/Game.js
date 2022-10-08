@@ -8,6 +8,7 @@ let Game = () => {
     let navigate = useNavigate();
     useEffect(() => {
         console.log(Number.parseInt(id), id)
+        if(id === "0") return
         fetch(`http://localhost:8080/AstronautGame/Registration/isLogged/${Number.parseInt(id)}`, {
             method : 'GET'
         }).then(res => res.json()).then(value => {
