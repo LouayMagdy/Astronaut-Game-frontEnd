@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import './GameKonva.css'
 import {Image, Star, Stage, Text, Rect, FastLayer, Layer} from 'react-konva';
 import 'gifler'
@@ -11,8 +11,8 @@ import Missle from "./Missle";
 const wsAPI = new WebSocket("ws://localhost:8080/AstronautGame/Match")
 
 let GameKonva = () => {
-    const starRef = useRef()
     let {id} = useParams()
+    let [dataSent, setDataSent] = useState(true);
     let [Astronaut, setAstronaut] = useState({x: 200, y: 100, rotation: 0})
     let [rocks, setRocks] = useState([]);
     let [food, setFood] = useState([]);
@@ -45,10 +45,11 @@ let GameKonva = () => {
                 })
                 )
                 console.log("some data sent to the backend")
+                setDataSent(!dataSent)
             }
             else console.log("ws closed")
         }, 500)
-    }, [time, circles, id])
+    }, [time, circles, id, dataSent])
     /// decrementing time
     useEffect(() => {
         if(time <= 0) return;
@@ -72,7 +73,7 @@ let GameKonva = () => {
             setRocks(tRocks)
         }
         console.log(food, rocks)
-    }, [time, rocks, food, life])
+    }, [time, rocks, food, life, dataSent])
     /// for stars
     useEffect(() => {
         if(time === 0) return;
@@ -123,6 +124,9 @@ let GameKonva = () => {
                 {x: Astronaut.x + 120, y: Astronaut.y, radius: 18},
                 {x: Astronaut.x + 139, y: Astronaut.y + 18, radius: 16}])
     }, [Astronaut])
+    const seconds = useCallback((time) => {
+        return time%60 < 10? `0${time % 60}` : `${time % 60}`
+    }, [])
 
     let length = 500;
 
@@ -132,17 +136,17 @@ let GameKonva = () => {
             <Stage height={window.innerHeight * 2.2 /3} width={window.innerWidth * 2 / 3}
                 style={{height: "inherit", width: "inherit", left: "inherit", top: 'inherit'}}>
                 <Layer listening={false}>
-                    {stars.map(str => <Star ref={starRef} numPoints={4} innerRadius={1} outerRadius={5} x={str.x} y={str.y} fill={'beige'} key={`${str.x} ${str.y}`}/>)}
+                    {stars.map(str => <Star numPoints={4} innerRadius={1} outerRadius={5} x={str.x} y={str.y} fill={'beige'} key={`${str.x} ${str.y}`}/>)}
                 </Layer>
                 <FastLayer>
-                    {rocks.map(rocka => <Missle src={lava} x={0 + rocka.x} y={0 + rocka.y} height={50} width={50}/>)}
-                    {food.map(sandwich => <Missle src={foods} x={0 + sandwich.x} y={0 + sandwich.y} height={38} width={48}/>)}
+                    {rocks.map(rocka => <Missle src={lava} x={0 + rocka.x} y={0 + rocka.y} height={50} width={50} isRock={true}/>)}
+                    {food.map(sandwich => <Missle src={foods} x={0 + sandwich.x} y={0 + sandwich.y} height={38} width={48} isRock={false}/>)}
                 </FastLayer>
                 <FastLayer>
                     <GIF src={gif} x={Astronaut.x} y={Astronaut.y} rotation={Astronaut.rotation} />
                 </FastLayer>
                 <FastLayer>
-                    <Text x={50} y={10} text={`${Math.trunc(time / 60)} : ${time % 60}`} fill={'white'} fontSize={25} fontFamily={'Games'}></Text>
+                    <Text x={50} y={10} text={`${Math.trunc(time / 60)} : ${seconds(time)}`} fill={'white'} fontSize={25} fontFamily={'Games'}></Text>
                     <Rect x={270} y={8} width={length} height={25} stroke={'red'} cornerRadius={4}></Rect>
                     <Rect x={270} y={8} width={length * life} height={24} fill={'darkRed'} cornerRadius={4}></Rect>
                 </FastLayer>
