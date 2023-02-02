@@ -1,16 +1,17 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import './GameKonva.css'
-import {Image, Layer, Star, Stage, Text, Rect, Circle} from 'react-konva';
+import {Image, Star, Stage, Text, Rect, FastLayer, Layer} from 'react-konva';
 import 'gifler'
-import useImage from "use-image";
 import lava from './lava rock.png'
 import foods from './food.png'
 import gif from './Untitled-unscreen.gif'
 import {useParams} from "react-router-dom";
+import Missle from "./Missle";
 
 const wsAPI = new WebSocket("ws://localhost:8080/AstronautGame/Match")
 
 let GameKonva = () => {
+    const starRef = useRef()
     let {id} = useParams()
     let [Astronaut, setAstronaut] = useState({x: 200, y: 100, rotation: 0})
     let [rocks, setRocks] = useState([]);
@@ -23,58 +24,57 @@ let GameKonva = () => {
     )
     let [time, setTime] = useState(120)
     let [life, setLife] = useState(1)
-
-
+    /// focusing on canvas element to listen to keyboard
     useEffect(() => {
         let match = document.querySelector('.match')
         match.focus()
     }, [])
-
+    /// sending data to the backend
     useEffect(() => {
-        if (time === 0) return
-        let match = document.querySelector('.match');
-        let right =  Number.parseInt(match.style.width)
-        let bottom = Number.parseInt(match.style.height)
-        if (wsAPI.readyState === wsAPI.OPEN) {
-            wsAPI.send(JSON.stringify({
-                iD: id,
-                x: right,
-                y: bottom,
-                circles: circles
-            }))
-            console.log("some data sent to the backend")
-        }
-        else console.log("ws closed")
-        setTimeout(() => {}, 1000)
-    }, [time])
-
-    useEffect(() => {
-        if(time === 0) return;
+        if (time <= 0) return
         setTimeout(() => {
-            setTime(time - 1);
-        }, 1000)
+            let match = document.querySelector('.match');
+            let right =  Number.parseInt(match.style.width)
+            let bottom = Number.parseInt(match.style.height)
+            if (wsAPI.readyState === wsAPI.OPEN) {
+                wsAPI.send(JSON.stringify({
+                    iD: id,
+                    x: right,
+                    y: bottom,
+                    circles: circles
+                })
+                )
+                console.log("some data sent to the backend")
+            }
+            else console.log("ws closed")
+        }, 500)
+    }, [time, circles, id])
+    /// decrementing time
+    useEffect(() => {
+        if(time <= 0) return;
+        setTimeout(() => {setTime(time - 1);}, 1000)
     }, [time])
-
-
+    /// getting data from the backend
     useEffect(() => { //// on message
-        if (time === 0) return;
+        if (time <= 0) return;
         let missles = [], tFood = [], tRocks = []
         wsAPI.onmessage = (data) => {
             console.log("some data received")
+            if (data.data === "Game Over") setTime(0)
             let parsedData = JSON.parse(data.data)
             setLife(parsedData.life / 100)
             parsedData.movables.forEach( movable => missles.push(JSON.parse(movable)))
             missles.forEach(missle => {
-                if(missle.type === 'rock') tRocks.push({x: missle.point.x, y: missle.point.y})
-                if(missle.type === 'food') tFood.push({x: missle.point.x, y: missle.point.y})
+                if(missle.type === 'rock' && tRocks.length < 10) tRocks.push({x: missle.point.x, y: missle.point.y})
+                if(missle.type === 'food' && tFood.length < 10) tFood.push({x: missle.point.x, y: missle.point.y})
             })
+            setFood(tFood)
+            setRocks(tRocks)
         }
-        setFood(tFood)
-        setRocks(tRocks)
         console.log(food, rocks)
-    }, [time])
-
-    useEffect(() => { /// for stars
+    }, [time, rocks, food, life])
+    /// for stars
+    useEffect(() => {
         if(time === 0) return;
         let size = Math.trunc(Math.random() * 50)
         let array = [];
@@ -84,9 +84,10 @@ let GameKonva = () => {
         for(let i = 0; i < size; i++)
             array.push({x: Math.trunc(Math.random() * (right - left)) + left, y: Math.trunc(Math.random() * (bottom - top)) + top})
         setStar(array)
-    }, [time])
-
+    }, [])
+    /// listening to keyboard
     let moveAstronaut = useCallback(e => {
+        console.log("key pressed")
         let match = document.querySelector('.match');
         let left = 0, right =  Number.parseInt(match.style.width)
         let top = 0, bottom = Number.parseInt(match.style.height)
@@ -122,8 +123,7 @@ let GameKonva = () => {
                 {x: Astronaut.x + 120, y: Astronaut.y, radius: 18},
                 {x: Astronaut.x + 139, y: Astronaut.y + 18, radius: 16}])
     }, [Astronaut])
-    let [rock] = useImage(lava)
-    let [foodI] = useImage(foods)
+
     let length = 500;
 
     return <div className={'gameKonva'} >
@@ -131,18 +131,21 @@ let GameKonva = () => {
         style={{height: window.innerHeight * 2.2 /3, width: window.innerWidth * 2 / 3, left: window.innerWidth * 0.17, top: window.innerHeight * 0.17}}>
             <Stage height={window.innerHeight * 2.2 /3} width={window.innerWidth * 2 / 3}
                 style={{height: "inherit", width: "inherit", left: "inherit", top: 'inherit'}}>
-                <Layer >
-                    <Text x={50} y={10} text={`${Math.trunc(time / 60)} : ${time % 60}`} fill={'white'} fontSize={25} fontFamily={'Games'}/>
-                    <Rect x={270} y={8} width={length} height={25} stroke={'red'} cornerRadius={4}/>
-                    <Rect x={270} y={8} width={length * life} height={24} fill={'darkRed'} cornerRadius={4}/>
-                    {stars.map(str => <Star numPoints={4} innerRadius={1} outerRadius={5} x={str.x} y={str.y} fill={'beige'} key={`${str.x} ${str.y}`} />)}
-                    {rocks.map(rocka => <Image image={rock} x={rocka.x} y={rocka.y} height={50} width={50} key={`${rocka.x} ${rocka.y}`}/>)}
-                    {food.map(sandwich => <Image image={foodI} x={sandwich.x} y={sandwich.y} height={38} width={48} key={`${sandwich.x} ${sandwich.y}`}/>)}
-                    <GIF src={gif} x={Astronaut.x} y={Astronaut.y} rotation={Astronaut.rotation} />
-                    <Circle x={200 + 90} y={100 + 60} radius={24} stroke={'red'}></Circle>
-                    <Circle x={200 + 88} y={100 + 90} radius={20} stroke={'red'}></Circle>
-                    <Circle x={200 + 86} y={100 + 110} radius={18} stroke={'red'}></Circle>
+                <Layer listening={false}>
+                    {stars.map(str => <Star ref={starRef} numPoints={4} innerRadius={1} outerRadius={5} x={str.x} y={str.y} fill={'beige'} key={`${str.x} ${str.y}`}/>)}
                 </Layer>
+                <FastLayer>
+                    {rocks.map(rocka => <Missle src={lava} x={0 + rocka.x} y={0 + rocka.y} height={50} width={50}/>)}
+                    {food.map(sandwich => <Missle src={foods} x={0 + sandwich.x} y={0 + sandwich.y} height={38} width={48}/>)}
+                </FastLayer>
+                <FastLayer>
+                    <GIF src={gif} x={Astronaut.x} y={Astronaut.y} rotation={Astronaut.rotation} />
+                </FastLayer>
+                <FastLayer>
+                    <Text x={50} y={10} text={`${Math.trunc(time / 60)} : ${time % 60}`} fill={'white'} fontSize={25} fontFamily={'Games'}></Text>
+                    <Rect x={270} y={8} width={length} height={25} stroke={'red'} cornerRadius={4}></Rect>
+                    <Rect x={270} y={8} width={length * life} height={24} fill={'darkRed'} cornerRadius={4}></Rect>
+                </FastLayer>
             </Stage>
          </div>
     </div>
