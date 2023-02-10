@@ -31,39 +31,23 @@
     justify-content: center;
     text-align: center;
 }
-.first{
-    color: gold;
+.first, .second, .third{
+    color: beige;
     margin-top: 10px;
 }
 .first:hover{
-    animation: shake 1s;
+    animation: shake 2s;
     animation-iteration-count: infinite;
-}
-.second{
-    color: silver;
-    margin-top: 10px;
 }
 .second:hover{
-    animation: shake 1s;
+    animation: shake 2s;
     animation-iteration-count: infinite;
-}
-.third{
-    color: sandybrown;
-    margin-top: 10px;
 }
 .third:hover{
-    animation: shake 1s;
+    animation: shake 2s;
     animation-iteration-count: infinite;
 }
-.you{
-    color: white;
-    margin-top: 40px;
-}
-.you:hover{
-    animation: shake 1s;
-    animation-iteration-count: infinite;
-}
-.first, .second, .third, .you{
+.first, .second, .third{
     background-color: rgba(100, 100, 100, 0.3);
     border-radius: 5px;
     display: block;

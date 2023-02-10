@@ -2,27 +2,22 @@ import React, {useState} from "react";
 import './Ranking.css'
 import NavBar from "../nav-bar/nav-bar";
 import Loading from "../Loading/Loading";
-import {useParams} from "react-router-dom";
 let Ranking = () => {
-    let {id} = useParams()
     let [data, setData] = useState([]);
-    let [currUser, setUser] = useState(null)
     React.useEffect(() => {
-        fetch("http://localhost:8080/AstronautGame/Stats/Rankings").then(response => response.json()).then(table => {
-            let tableArr = [];
-            table.forEach(t => tableArr.push(JSON.parse(t)))
-            setData(tableArr)
-            console.log(tableArr)
-            setUser(tableArr.find(u => u.iD === Number.parseInt(id)));
-            console.log(currUser)
+        fetch("http://localhost:8080/api/v1/auth/astronaut-game/stats").then(response => response.json()).then(table => {
+            console.log(table)
+            setData(table)
         })
     }, [])
+
     let [loading, isLoading] = useState(true);
     React.useEffect(() => {
         setTimeout(() => {
             isLoading(false)
         }, 2000)
     })
+
     if(loading) return <Loading/>
     return <div className={'rank'}>
         <NavBar/>
@@ -31,24 +26,19 @@ let Ranking = () => {
             <div className={'ranks'}>
                 {data.map((user, index) => {
                     if (index === 0)
-                        return <label className={'first'}><i className={'fas fa-medal'} style={{color: 'gold'}}></i> First
-                            : <br/> Username : {user.userName} <br/> Average Life : {user.score.avgLife} <br/> Average Collected Food : {user.score.avgCollectedFood} <br/> Games Played : {user.score.gamesPlayed}
+                        return <label className={'first'}><i className={'fas fa-medal'} style={{color: 'gold', fontSize: 30}}></i> First
+                            <br/> Username : {user.userName} <br/> Average Life : {user.avgLife} <br/> Max.Collected Food : {user.maxCollectedFood} <br/> Games Played : {user.gamesPlayedNum}
                         </label>
                     else if(index === 1)
-                        return <label className={'second'}><i className={'fas fa-medal'} style={{color: 'silver'}}></i> Second
-                            : <br/> Username : {user.userName} <br/> Average Life : {user.score.avgLife} <br/> Average Collected Food : {user.score.avgCollectedFood} <br/> Games Played : {user.score.gamesPlayed}
+                        return <label className={'second'}><i className={'fas fa-medal'} style={{color: 'silver', fontSize: 30}}></i> Second
+                            <br/> Username : {user.userName} <br/> Average Life : {user.avgLife} <br/> Max.Collected Food : {user.maxCollectedFood} <br/> Games Played : {user.gamesPlayedNum}
                         </label>
-                    else if(index === 2 && !currUser)
-                        return <label className={'third'}><i className={'fas fa-medal'} style={{color: 'sandybrown'}}></i>Third
-                            : <br/> Username : {user.userName} <br/> Average Life : {user.score.avgLife} <br/> Average Collected Food : {user.score.avgCollectedFood} <br/> Games Played : {user.score.gamesPlayed}
+                    else if(index === 2)
+                        return <label className={'third'}><i className={'fas fa-medal'} style={{color: 'sandybrown', fontSize: 30}}></i>Third
+                            <br/> Username : {user.userName} <br/> Average Life : {user.avgLife} <br/> Max.Collected Food : {user.maxCollectedFood} <br/> Games Played : {user.gamesPlayedNum}
                         </label>
                     return null
                 })}
-                {currUser? <label className={'you'}> You <br/>
-                    Rank : {data.indexOf(currUser) + 1}
-                    <br/> Average Life : {currUser.score.avgLife} <br/> Average Collected Food : {currUser.score.avgCollectedFood} <br/> Games Played : {currUser.score.gamesPlayed}
-                </label> : null}
-
             </div>
         </div>
     </div>
