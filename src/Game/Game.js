@@ -1,21 +1,15 @@
-import React, {useEffect} from "react";
 import './Game.css'
 import NavBar from "../nav-bar/nav-bar";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import flyAstro from './flyAstro-removebg-preview.png'
 let Game = () => {
-    let {id} = useParams()
     let navigate = useNavigate();
-    useEffect(() => {
-        console.log(Number.parseInt(id), id)
-        if(id === "0") return
-        fetch(`http://localhost:8080/AstronautGame/Registration/isLogged/${Number.parseInt(id)}`, {
-            method : 'GET'
-        }).then(res => res.json()).then(value => {
-            console.log(value)
-            if (!value) navigate("/AstronautGame/Register0");
-        })
-    },[])
+    const isNormal = localStorage.getItem("jastro-wgamet") !== null;
+    let signOut = () => {
+        localStorage.removeItem("jastro-wgamet")
+        navigate("/AstronautGame/Register")
+    }
+
     return <div className={'gamePage'}>
         <div className={'header'}>
             <NavBar/>
@@ -26,10 +20,10 @@ let Game = () => {
                 <h1 className={'title'}>The Missing Astronaut</h1>
             </div>
             <div className={'menu'}>
-                <button onClick={() => navigate(`/AstronautGame/Rules:${id}`)}> Play A Game <i className={'fas fa-user-astronaut'}></i></button>
-                <button onClick={() => navigate(`/AstronautGame/Ranking:${id}`)}> Ranking <i className={'fas fa-medal'}></i> </button>
-                <button> Statistics <i className={'fas fa-chart-pie'}></i> </button>
-                <button onClick={() => navigate(`/${id}`)}> Sign-Out <i className={'fas fa-door-open'} ></i> </button>
+                <button onClick={() => navigate(`/AstronautGame/Rules`)}> Play A Game <i className={'fas fa-user-astronaut'}></i></button>
+                <button onClick={() => navigate(`/AstronautGame/Ranking`)}> Ranking <i className={'fas fa-medal'}></i> </button>
+                <button disabled={!isNormal} onClick={() => signOut()}> Sign-Out <i className={'fas fa-door-open'} ></i> </button>
+                <button disabled={isNormal} onClick={() => navigate("/AstronautGame/Register")}> Register <i className={'fas fa-user-edit'}></i>  </button>
             </div>
         </div>
     </div>
