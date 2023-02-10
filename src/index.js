@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Register from "./Registration/Register";
 import Ranking from "./Ranking/Ranking";
 import About from "./About/About";
@@ -15,15 +15,17 @@ root.render(
   <React.StrictMode>
       <BrowserRouter>
           <Routes>
-              <Route path={'/AstronautGame/:id'} element={<App/>}></Route>
-              <Route path={'/AstronautGame/Register:id'} element={<Register/>} ></Route>
-              <Route path={'/AstronautGame/Ranking:id'} element={<Ranking/>}></Route>
-              <Route path={'/AstronautGame/About:id'} element={<About/>}></Route>
-              <Route path={'/AstronautGame/Game:id'} element={<Game/>}></Route>
-              <Route path={'/AstronautGame/Rules:id'} element={<Rules/>}></Route>
-              <Route path={'/AstronautGame/match:id'} element={<GameKonva/>}></Route>
+              <Route exact path={'/'} element={<Navigate to={"/AstronautGame"} replace={true}/>}></Route>
+              <Route path={'/AstronautGame'} element={<App/>}></Route>
+              <Route path={'/AstronautGame/Register'} element={<Register/>} ></Route>
+              <Route path={'/AstronautGame/Ranking'} element={<Ranking/>}></Route>
+              <Route path={'/AstronautGame/About'} element={<About/>}></Route>
+              <Route path={'/AstronautGame/Game'} element={<Game/>}></Route>
+              <Route path={'/AstronautGame/Rules'} element={<Rules/>}></Route>
+              <Route path={'/AstronautGame/match'} element={<GameKonva/>}></Route>
           </Routes>
       </BrowserRouter>
+
   </React.StrictMode>
 );
 
