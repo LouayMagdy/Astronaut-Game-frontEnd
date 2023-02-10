@@ -22,7 +22,7 @@ root.render(
               <Route path={'/AstronautGame/About'} element={<About/>}></Route>
               <Route path={'/AstronautGame/Game'} element={<Game/>}></Route>
               <Route path={'/AstronautGame/Rules'} element={<Rules/>}></Route>
-              <Route path={'/AstronautGame/match'} element={<GameKonva/>}></Route>
+              <Route path={'/AstronautGame/Match'} element={<GameKonva/>}></Route>
           </Routes>
       </BrowserRouter>
 

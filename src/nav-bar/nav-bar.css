@@ -20,7 +20,7 @@ ul{
     margin-right: 50px;
 }
 .l:hover{
-    animation: shake 1s;
+    animation: shake 2s;
     animation-iteration-count: infinite;
 }
 .l label{

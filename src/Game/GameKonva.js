@@ -5,13 +5,14 @@ import 'gifler'
 import lava from './Images/lava rock.png'
 import foods from './Images/food.png'
 import gif from './Images/Untitled-unscreen.gif'
-import {useParams} from "react-router-dom";
 import Missle from "./Missle";
+import {useNavigate} from "react-router-dom";
 
-const wsAPI = new WebSocket("ws://localhost:8080/AstronautGame/Match")
+let wsAPI = new WebSocket("ws://localhost:8080/api/v1/auth/astronaut-game/match")
 
 let GameKonva = () => {
-    let {id} = useParams()
+    let navigate = useNavigate();
+    let token = localStorage.getItem("jastro-wgamet")
     let [dataSent, setDataSent] = useState(true);
     let [Astronaut, setAstronaut] = useState({x: 200, y: 100, rotation: 0})
     let [rocks, setRocks] = useState([]);
@@ -31,14 +32,18 @@ let GameKonva = () => {
     }, [])
     /// sending data to the backend
     useEffect(() => {
-        if (time <= 0) return
+        if (time <= 0){
+            wsAPI.close();
+            navigate("/AstronautGame/Game");
+            return;
+        }
         setTimeout(() => {
             let match = document.querySelector('.match');
             let right =  Number.parseInt(match.style.width)
             let bottom = Number.parseInt(match.style.height)
             if (wsAPI.readyState === wsAPI.OPEN) {
                 wsAPI.send(JSON.stringify({
-                    iD: id,
+                    token: token? token : "",
                     x: right,
                     y: bottom,
                     circles: circles
@@ -49,19 +54,27 @@ let GameKonva = () => {
             }
             else console.log("ws closed")
         }, 500)
-    }, [time, circles, id, dataSent])
+    }, [time, circles, dataSent])
     /// decrementing time
     useEffect(() => {
-        if(time <= 0) return;
+        if(time <= 0) {
+            wsAPI.close()
+            navigate("/AstronautGame/Game");
+            return;
+        }
         setTimeout(() => {setTime(time - 1);}, 1000)
     }, [time])
     /// getting data from the backend
     useEffect(() => { //// on message
-        if (time <= 0) return;
+        if (time <= 0){
+            wsAPI.close()
+            navigate("/AstronautGame/Game");
+            return;
+        }
         let missles = [], tFood = [], tRocks = []
         wsAPI.onmessage = (data) => {
             console.log("some data received")
-            if (data.data === "Game Over") setTime(0)
+            if (data.data === "Game Over") {setTime(0); }
             let parsedData = JSON.parse(data.data)
             setLife(parsedData.life / 100)
             parsedData.movables.forEach( movable => missles.push(JSON.parse(movable)))
@@ -76,7 +89,11 @@ let GameKonva = () => {
     }, [time, rocks, food, life, dataSent])
     /// for stars
     useEffect(() => {
-        if(time === 0) return;
+        if(time === 0) {
+            wsAPI.close()
+            navigate("/AstronautGame/Game");
+            return;
+        }
         let size = Math.trunc(Math.random() * 50)
         let array = [];
         let match = document.querySelector('.match');

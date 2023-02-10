@@ -1,13 +1,12 @@
 import React, {useEffect} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import './Rules.css'
 import astronautGif from "../Images/Untitled-unscreen.gif"
 let Rules = () =>{
     let navigate = useNavigate()
-    let {id} = useParams()
     useEffect(() => {
         setTimeout(() => {
-            navigate(`/AstronautGame/match${id}`)
+            navigate(`/AstronautGame/Match`)
         }, 120000)
     }, [])
     return <div className={'mainRef'}>
@@ -46,7 +45,7 @@ let Rules = () =>{
                 </li>
             </ul>
             <div className={'btn'}>
-                <button onClick={() => navigate(`/AstronautGame/match${id}`)}> Proceed To The Game</button>
+                <button onClick={() => navigate("/AstronautGame/Match")}> Proceed To The Game </button>
             </div>
         </div>
 
