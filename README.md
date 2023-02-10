@@ -21,6 +21,13 @@ a front-end system of a web flash game about an astronaut trying to collecct som
 ![image](https://user-images.githubusercontent.com/95547833/218194674-fe1d0c11-1165-410b-b522-6e4628751fa1.png)
 * JWT cached in local storage for a Registered User
 ![image](https://user-images.githubusercontent.com/95547833/218196075-17308d1f-33e7-4e27-8188-8ca7f252ef19.png)
+* Ranking Page (it is in this form due to presence of a single user right now)
+![image](https://user-images.githubusercontent.com/95547833/218201437-2b6544cc-e033-4000-b0b3-bac27077fe3e.png)
+* About page
+![image](https://user-images.githubusercontent.com/95547833/218202767-73959bb5-f66b-47e8-9bfd-373fc7c57bac.png)
+the contact label in the navbar will direct the user to Gmail to type a mail to the me 
+* Rules Page
+![image](https://user-images.githubusercontent.com/95547833/218203097-54f0b90b-174f-43d7-8ddd-ca44d7bdcd39.png)
 * Match 
 ![image](https://user-images.githubusercontent.com/95547833/218193044-b91b3d94-8b57-4f86-97ed-02fc8246cb9d.png)
 
