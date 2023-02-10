@@ -5,9 +5,10 @@ import astronautGif from "../Images/Untitled-unscreen.gif"
 let Rules = () =>{
     let navigate = useNavigate()
     useEffect(() => {
-        setTimeout(() => {
+        let navi = setTimeout(() => {
             navigate(`/AstronautGame/Match`)
-        }, 120000)
+        }, 2000)
+        return () => {clearTimeout(navi)}
     }, [])
     return <div className={'mainRef'}>
         <div className={'titleR'}>
