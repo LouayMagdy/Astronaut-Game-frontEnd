@@ -7,7 +7,7 @@ let Rules = () =>{
     useEffect(() => {
         let navi = setTimeout(() => {
             navigate(`/AstronautGame/Match`)
-        }, 2000)
+        }, 120000)
         return () => {clearTimeout(navi)}
     }, [])
     return <div className={'mainRef'}>
