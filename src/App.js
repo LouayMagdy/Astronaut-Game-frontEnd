@@ -1,17 +1,18 @@
 import {useState, useEffect} from "react";
-import {BrowserRouter, Route, Routes, useNavigate, Link, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import './App.css'
 import NavBar from "./nav-bar/nav-bar";
 import astro from "./sleep_astro-removebg-preview.png"
-import Register from "./Registration/Register";
 import Loading from './Loading/Loading'
+
+
 function App() {
-    let {id} = useParams();
     let [loading, isLoading] = useState(true)
     let intro = ["welcome to the missing astronaut game...", "Come and help our astronaut to survive the space", "keep your eyes open"]
     let [textArr, setArr] = useState(['', '', ''])
     let [index, setIndex] = useState(0)
     let [indexWithin, setIndexWithin] = useState(-1)
+
     useEffect(() => { setTimeout(() =>{
         let temp = textArr;
         if(!loading && index < intro.length && indexWithin < intro[index].length)
@@ -20,12 +21,15 @@ function App() {
         if(!loading && intro[index] && indexWithin < intro[index].length) setIndexWithin(indexWithin + 1)
         else if (!loading && index < intro.length){setIndexWithin(0); setIndex(index + 1)}
     }, 100)}, [intro, textArr, index, indexWithin, loading])
+
     useEffect(() => {
         if(loading){
             setTimeout(() => isLoading(false), 4000)
         }
     }, [loading])
+
     let navigate = useNavigate();
+
     if(loading) return <div> <Loading/> </div>
     if(!loading) return (
     <div className='welcome'>
@@ -39,7 +43,7 @@ function App() {
               <img src={astro} alt={'astronaut'} className={'astronautS'}/>
           </div>
           <div className={'start'}>
-              <button onClick={() => (id.replaceAll(":", '') === '0')? navigate(`/AstronautGame/Register${id.replaceAll(":", '')}`) : navigate(`/AstronautGame/Game${id.replaceAll(":", '')}`)}>
+              <button onClick={() => navigate('/AstronautGame/Register')}>
                   Get Started
                   <i className={'fas fa-user-astronaut'}></i>
               </button>

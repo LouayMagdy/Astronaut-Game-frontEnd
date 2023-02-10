@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
 .SignUpForm, .signInForm{
     display: block;
-    padding: 5px 5px;
+    padding: 5px 20px;
     font-family: Cairo;
     width: max-content;
     height: max-content;
