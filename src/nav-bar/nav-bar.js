@@ -7,7 +7,8 @@ let NavBar = () => {
             <li className={'l'} onClick={() => navigator(`/AstronautGame`)}><label>home</label></li>
             <li className={'l'}><label onClick={() => navigator(`/AstronautGame/About`)}>about</label></li>
             <li className={'l'}><label onClick={() => navigator(`/AstronautGame/Ranking`)}>ranking</label></li>
-            <li className={'l'}><label>contact</label></li>
+            <li className={'l'}><label> <a href={'https://mail.google.com/mail/u/0/#inbox?compose=VpCqJXKBhfNkWwZfrghGdmNDJCLGmfwbbGhzdfSxzgztHhMNVljnsPfcLdbGSRLkPtPbFQq'}>
+                Contact </a></label></li>
         </ul>
     </nav>
 }
