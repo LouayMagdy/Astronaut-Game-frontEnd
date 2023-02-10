@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import './App.css'
 import NavBar from "./nav-bar/nav-bar";
-import astro from "./sleep_astro-removebg-preview.png"
+import astro from "./Images/sleep_astro-removebg-preview.png"
 import Loading from './Loading/Loading'
 
 
@@ -24,7 +24,7 @@ function App() {
 
     useEffect(() => {
         if(loading){
-            setTimeout(() => isLoading(false), 4000)
+            setTimeout(() => isLoading(false), 2000)
         }
     }, [loading])
 

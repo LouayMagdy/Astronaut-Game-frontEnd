@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import './Rules.css'
-import astronautGif from "../Untitled-unscreen.gif"
+import astronautGif from "../Images/Untitled-unscreen.gif"
 let Rules = () =>{
     let navigate = useNavigate()
     let {id} = useParams()

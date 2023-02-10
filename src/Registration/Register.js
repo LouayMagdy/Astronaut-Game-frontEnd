@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import image from '../astro-removebg-preview.png'
+import image from '../Images/astro-removebg-preview.png'
 import './Register.css'
 import SignUpForm from "./signUpForm";
 import SignInForm from "./SignInForm";
-import astro from "../sleep_astro-removebg-preview.png";
+import astro from "../Images/sleep_astro-removebg-preview.png";
 import NavBar from "../nav-bar/nav-bar";
 let Register = () => {
     let [signUp, setSignUp] = useState(false)

@@ -2,9 +2,9 @@ import React, {useCallback, useEffect, useState} from "react";
 import './GameKonva.css'
 import {Image, Star, Stage, Text, Rect, FastLayer, Layer} from 'react-konva';
 import 'gifler'
-import lava from './lava rock.png'
-import foods from './food.png'
-import gif from './Untitled-unscreen.gif'
+import lava from './Images/lava rock.png'
+import foods from './Images/food.png'
+import gif from './Images/Untitled-unscreen.gif'
 import {useParams} from "react-router-dom";
 import Missle from "./Missle";
 

@@ -1,7 +1,7 @@
 import './Game.css'
 import NavBar from "../nav-bar/nav-bar";
 import {useNavigate} from "react-router-dom";
-import flyAstro from './flyAstro-removebg-preview.png'
+import flyAstro from './Images/flyAstro-removebg-preview.png'
 let Game = () => {
     let navigate = useNavigate();
     const isNormal = localStorage.getItem("jastro-wgamet") !== null;

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
 .page{
-    background-image: url("../solarSystem.jpg");
+    background-image: url("../Images/solarSystem.jpg");
     top: 0; bottom: 0;
     left: 0; right: 0;
     height: 100%;

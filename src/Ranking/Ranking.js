@@ -21,7 +21,7 @@ let Ranking = () => {
     React.useEffect(() => {
         setTimeout(() => {
             isLoading(false)
-        }, 4000)
+        }, 2000)
     })
     if(loading) return <Loading/>
     return <div className={'rank'}>

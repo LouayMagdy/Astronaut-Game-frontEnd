@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
 .About{
     font-family: Cairo;
-    background-image: url("../solarSystem.jpg");
+    background-image: url("../Images/solarSystem.jpg");
     display: flex;
     justify-content: right;
     height: 100%;
