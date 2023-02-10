@@ -19,7 +19,7 @@ let About = () => {
                     <li className={'f'}>some snacks that he should collect as much as possible of them</li>
                 </ul>
                 <p>the astronaut should reach the space-ship before it leaves in two minutes time and should avoid the lava stones</p>
-                <p>for further knowledge about the design and the development of the game visit ...</p>
+                <p>for further knowledge about the design and the development of the game contact the developer and ask for the Github Repo.</p>
             </div>
         </div>
     </div>
