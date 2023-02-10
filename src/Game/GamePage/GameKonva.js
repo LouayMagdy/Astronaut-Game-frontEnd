@@ -2,9 +2,9 @@ import React, {useCallback, useEffect, useState} from "react";
 import './GameKonva.css'
 import {Image, Star, Stage, Text, Rect, FastLayer, Layer} from 'react-konva';
 import 'gifler'
-import lava from './Images/lava rock.png'
-import foods from './Images/food.png'
-import gif from './Images/Untitled-unscreen.gif'
+import lava from '../Images/lava rock.png'
+import foods from '../Images/food.png'
+import gif from '../Images/Untitled-unscreen.gif'
 import Missle from "./Missle";
 import {useNavigate} from "react-router-dom";
 
@@ -34,7 +34,7 @@ let GameKonva = () => {
     useEffect(() => {
         if (time <= 0){
             wsAPI.close();
-            navigate("/AstronautGame/Game");
+            navigate("/AstronautGame/GameOver");
             return;
         }
         setTimeout(() => {
@@ -59,7 +59,7 @@ let GameKonva = () => {
     useEffect(() => {
         if(time <= 0) {
             wsAPI.close()
-            navigate("/AstronautGame/Game");
+            navigate("/AstronautGame/GameOver");
             return;
         }
         setTimeout(() => {setTime(time - 1);}, 1000)
@@ -68,7 +68,7 @@ let GameKonva = () => {
     useEffect(() => { //// on message
         if (time <= 0){
             wsAPI.close()
-            navigate("/AstronautGame/Game");
+            navigate("/AstronautGame/GameOver");
             return;
         }
         let missles = [], tFood = [], tRocks = []
@@ -91,7 +91,7 @@ let GameKonva = () => {
     useEffect(() => {
         if(time === 0) {
             wsAPI.close()
-            navigate("/AstronautGame/Game");
+            navigate("/AstronautGame/GameOver");
             return;
         }
         let size = Math.trunc(Math.random() * 50)

@@ -6,10 +6,10 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Register from "./Registration/Register";
 import Ranking from "./Ranking/Ranking";
 import About from "./About/About";
-import Game from "./Game/Game";
-import GameKonva from "./Game/GameKonva";
+import Game from "./Game/GameMenu/Game";
+import GameKonva from "./Game/GamePage/GameKonva";
 import Rules from "./Game/Rules/Rules";
-
+import GameOver from "./Game/GameOverPage/GameOver";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -23,6 +23,7 @@ root.render(
               <Route path={'/AstronautGame/Game'} element={<Game/>}></Route>
               <Route path={'/AstronautGame/Rules'} element={<Rules/>}></Route>
               <Route path={'/AstronautGame/Match'} element={<GameKonva/>}></Route>
+              <Route path={'/AstronautGame/GameOver'} element={<GameOver/>}></Route>
           </Routes>
       </BrowserRouter>
 

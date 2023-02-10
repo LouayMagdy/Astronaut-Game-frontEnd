@@ -1,0 +1,24 @@
+.GameOverPage{
+    background-image: url("../../Images/solarSystem.jpg");
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    color: lavender;
+}
+
+.GameOverWindow{
+    background-color: rgb(40, 40, 40, 0.5);
+    position: absolute;
+    height: 200px;
+    width: 450px;
+    padding-left: 230px;
+    border-radius: 5px;
+}
+.GameOver{
+    font-family: Games;
+    font-size: 40px;
+    letter-spacing: 1px;
+    margin-top: 75px;
+}

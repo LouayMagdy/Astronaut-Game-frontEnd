@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
 .gamePage{
-    background-image: url("../Images/solarSystem.jpg");
+    background-image: url("../../Images/solarSystem.jpg");
     position: fixed;
     top: 0;
     left: 0;
